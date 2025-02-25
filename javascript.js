@@ -1,5 +1,3 @@
-console.log("hi");
-
 function getComputerChoice(){
     let computerChoice;
 
@@ -21,25 +19,16 @@ function getComputerChoice(){
 
 }
 
-function getHumanChoice(){
-    humanChoice = prompt("Enter Choice");
-    return humanChoice;
-}
-
-
-
 let humanScore=0;
 let computerScore=0;
 
-function playRound(){
-    let HC = getHumanChoice().toLowerCase();
-    let CC = getComputerChoice();
-    console.log(HC);
-    console.log(CC);
-
-    while (HC!="rock" && HC!="scissors" && HC!="paper"){
-        HC=prompt("Oops, that's against the rules! Try again!").toLowerCase();
+function playRound(HC){
+    const existingDiv = document.querySelector("div");
+    if(existingDiv){
+        existingDiv.remove();
     }
+
+    let CC = getComputerChoice();
 
     if(HC=="rock" && CC=="scissors"){
         humanScore++;
@@ -51,20 +40,51 @@ function playRound(){
         humanScore++;
     }
     else if(HC===CC){
-        alert("Tie!");
+        humanScore++;
+        computerScore++;
     }
     else{
         computerScore++;
     }
 
-    alert("Score is: "+humanScore+","+computerScore);
+    const div = document.createElement("div");
+    document.body.append(div);
+    div.textContent = "Score is " + humanScore + " : " + computerScore;
+    if(humanScore == 5){
+        div.textContent += "You Won";
+    } 
+    else if(computerScore == 5){
+        div.textContent += "You Lost";
+    }
     return humanScore, computerScore;
 }
 
-function playGame(){
-    for(let i = 0; i < 5; i++){
-        playRound();
-    }
+const rockButton = document.createElement("button");
+document.body.append(rockButton);
+rockButton.textContent = "Rock";
+rockButton.addEventListener("click", ()=> {
+    playRound("rock");
+});
+
+const paperButton = document.createElement("button");
+document.body.append(paperButton);
+paperButton.textContent = "Paper";
+paperButton.addEventListener("click", ()=> {
+    playRound("paper");
+});
+
+const scissorsButton = document.createElement("button");
+document.body.append(scissorsButton);
+scissorsButton.textContent = "Scissors";
+scissorsButton.addEventListener("click", ()=> {
+    playRound("scissors");
+});
+
+
+
+
+/*function playGame(){
+    
     if(humanScore>computerScore){
         alert("You Won, Final Score is: "+humanScore+"-"+computerScore);
     }
@@ -75,5 +95,6 @@ function playGame(){
         alert("You Lost, Final Score is: "+humanScore+"-"+computerScore);
     }
 }
+    */
 
-playGame();
+
